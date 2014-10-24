@@ -17,24 +17,20 @@ using namespace ods;
 int main() {
   srand(time(0));
 
-  /* ChainedHashTable<int> table;
-  table.SetLocalFactor(8);
-  table.TestHash(1000);
-
+  ChainedHashTable<int> table;
+  table.SetLocalFactor(3.75);
+  table.TestHash(400);
   cout << endl;
-
   cout << "Longest DLList: " << table.GetLongestList() << endl;
-   */
 
   LinearHashTable<int> table2(-1, -2);
-  /*
-  cout << table2.add(7) << endl;
-  cout << "FIND: " << table2.find(7) << endl;
-  cout << table2.add(5) << endl;
-  cout << "FIND: " << table2.find(5) << endl;
-*/
   table2.PrintTable(50);
-  table2.EvenlyLoaded();
+  for (int i = 0; i < 25; i++) {
+    int random = (unsigned) rand() % 100;
+    if (table2.find(random) != table2.getNull())
+      table2.remove(random);
+  }
+
 
   return 0;
 

@@ -102,7 +102,7 @@ template<class T>
 bool ChainedHashTable<T>::add(T x) {
   if (find(x) != null)
     return false;
-  if (n + 1 > (t.length * f))
+  if (n + 1 > (t.length * f)) // accounts for load factor
     resize();
   t[hash(x)].add(x);
   n++;
