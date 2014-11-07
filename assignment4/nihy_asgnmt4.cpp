@@ -9,6 +9,7 @@
 #include <iostream>
 #include "nihy_BinaryTree.h"
 #include "nihy_BinarySearchTree.h"
+#include "DLList.h"
 
 using namespace std;
 using namespace ods;
@@ -26,10 +27,6 @@ int main() {
    tree.add(7);
    tree.add(9);
    tree.add(5);
-
-   // cout << tree.height() << endl;
-   cout << tree.isBalanced() << endl;
-
 
   return 0;
 }

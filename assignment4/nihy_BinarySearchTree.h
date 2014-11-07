@@ -11,6 +11,7 @@
 #include <cmath>
 #include "nihy_BinaryTree.h"
 #include "utils.h"
+#include "DLList.h"
 
 namespace ods {
 
@@ -18,6 +19,9 @@ template<class Node, class T>
 class BSTNode : public BTNode<Node> {
 public:
   T x;
+  int pre_order;
+  int in_order;
+  int pst_order;
 };
 
 /**
@@ -26,11 +30,13 @@ public:
  */
 template<class Node, class T>
 class BinarySearchTree : public BinaryTree<Node> {
+
 protected:
   using BinaryTree<Node>::r;
   using BinaryTree<Node>::nil;
   int n;
   T null;
+  bool keepChecking;
   virtual Node *findLast(T x);
   virtual bool addChild(Node *p, Node *u);
   virtual void splice(Node *u);
@@ -45,9 +51,18 @@ public:
   virtual bool add(T x);
   virtual bool remove(T x);
   virtual T find(T x);
+  Node* getNode(T x);
   virtual T findEQ(T x);
   virtual int size();
   virtual void clear();
+  void preOrderNumber();
+  void preOrderNumber(Node* u);
+  void inOrderNumber();
+  void inOrderNumber(Node* u);
+  void postOrderNumbers();
+  void postOrderNumbers(Node* u);
+  DLList<T> getLE(T comp);
+  void getLE(Node* u, DLList<T>* list, T comp);
 };
 
 template<class T>
@@ -130,6 +145,23 @@ T BinarySearchTree<Node,T>::find(T x) {
     }
   }
   return z == nil ? null : z->x;
+}
+
+template<class Node, class T>
+Node* BinarySearchTree<Node, T>::getNode(T x) {
+  Node *w = r, *z = nil;
+   while (w != nil) {
+     int comp = compare(x, w->x);
+     if (comp < 0) {
+       z = w;
+       w = w->left;
+     } else if (comp > 0) {
+       w = w->right;
+     } else {
+       return w;
+     }
+   }
+   return nil;
 }
 
 template<class Node, class T>
@@ -271,8 +303,77 @@ void BinarySearchTree<Node, T>::rotateRight(Node *u) {
   if (u == r) { r = w; r->parent = nil; }
 }
 
+template<class Node, class T>
+void BinarySearchTree<Node, T>::preOrderNumber() {
+  preOrderNumber(r);
+}
+
+template<class Node, class T>
+void BinarySearchTree<Node, T>::preOrderNumber(Node* u) {
+  int order_number = 1;
+  if (u == nil)
+    return;
+
+  u->pre_order = ++order_number;
+  preOrderNumber(u->left);
+  preOrderNumber(u->right);
+}
+
+template<class Node, class T>
+void BinarySearchTree<Node, T>::inOrderNumber() {
+  inOrderNumber(r);
+}
+
+template<class Node, class T>
+void BinarySearchTree<Node, T>::inOrderNumber(Node* u) {
+  int order_number = 1;
+  if (u == nil)
+    return;
+
+  inOrderNumber(u->left);
+  u->pre_order = ++order_number;
+  ineOrderNumber(u->right);
+}
+
+template<class Node, class T>
+void BinarySearchTree<Node, T>::postOrderNumbers() {
+  postOrderNumbers(r);
+}
+
+template<class Node, class T>
+void BinarySearchTree<Node, T>::postOrderNumbers(Node* u) {
+  int order_number = 1;
+  if (u == nil)
+    return;
+
+  postOrderNumbers(u->left);
+  postOrderNumbers(u->right);
+  u->pst_order = ++order_number;
+}
 
 
+template<class Node, class T>
+DLList<T> BinarySearchTree<Node, T>::getLE(T comp) {
+  DLList<T> ret;
+  keepChecking = true;
+  getLE(r, &ret, comp);
+  return ret;
+}
+
+template<class Node, class T>
+void BinarySearchTree<Node, T>::getLE(Node* u, DLList<T>* list, T comp) {
+  if (u == nil)
+    return;
+  if (!keepChecking)
+    return;
+
+  getLE(u->left, list, comp);
+
+  if (compare(u->x, comp) <= 0)
+      list->add(u->x);
+
+  getLE(u->right, list, comp);
+}
 /*
 template<class T>
 BinarySearchTree1<T*>::BinarySearchTree1() : BinarySearchTree<BSTNode1<T*>, T*>(NULL) {
