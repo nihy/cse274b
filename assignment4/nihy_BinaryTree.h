@@ -46,6 +46,7 @@ public:
   virtual void traverse();
   virtual void traverse2();
   virtual void bfTraverse();
+  int Height2();
   virtual int Height2(Node* u);
   virtual Node *getRootNode() {
     return r;
@@ -151,43 +152,48 @@ int BinaryTree<Node>::size2() {
 }
 
 template<class Node>
+int BinaryTree<Node>::Height2() {
+  return Height2(r);
+}
+
+template<class Node>
 int BinaryTree<Node>::Height2(Node* u) {
   Node *prev = nil, *next;
   int down = 1, up = 0;
-   while (u != nil) {
-     if (prev == u->parent) {
-       if (u->left != nil)
-         next = u->left;
-       else if (u->right != nil)
-         next = u->right;
-       else
-         next = u->parent;
-     } else if (prev == u->left) {
-       if (u->right != nil)
-         next = u->right;
-       else
-         next = u->parent;
-     } else {
-       next = u->parent;
-     }
-     prev = u;
-     u = next;
+  while (u != nil) {
+    if (prev == u->parent) {
+      if (u->left != nil)
+        next = u->left;
+      else if (u->right != nil)
+        next = u->right;
+      else
+        next = u->parent;
+    } else if (prev == u->left) {
+      if (u->right != nil)
+        next = u->right;
+      else
+        next = u->parent;
+    } else {
+      next = u->parent;
+    }
+    prev = u;
+    u = next;
 
-     if (up == 0) {
-       if (u != prev->parent) // u must have traveled down to left or right
-         down++;
-       else // u traveled back up to parent
-         up--;
-     }
-     else if (up > 0)  // u has traveled up before
-       up--;
-   }
-   return up + down;
+    if (up == 0) {
+      if (u != prev->parent) // u must have traveled down to left or right
+        down++;
+      else
+        // u traveled back up to parent
+        up--;
+    } else if (up > 0)  // u has traveled up before
+      up--;
+  }
+  return up + down;
 }
 
 template<class Node>
 int BinaryTree<Node>::height() {
-  return Height2(r);
+  return height(r);
 }
 
 template<class Node>
@@ -263,12 +269,14 @@ int BinaryTree<Node>::isBalanced(Node *u) {
   int sizeRght = isBalanced(u->right);
 
   if (sizeLeft == -1 || sizeRght == -1)
-    return 1+sizeLeft+sizeRght;
+    return -1;
 
-  if (u->left == nil || u->right == nil)
+  if ((sizeLeft - sizeRght >= -1) && (sizeLeft - sizeRght <= 1))
+    return 1 + sizeLeft + sizeRght;
+
+  else
     return -1;
 }
-
 
 } /* namespace ods */
 

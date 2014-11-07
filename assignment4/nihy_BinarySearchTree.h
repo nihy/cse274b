@@ -336,7 +336,7 @@ void BinarySearchTree<Node, T>::inOrderNumber(Node* u) {
 
   inOrderNumber(u->left);
   u->in_order = order_number;
-  ineOrderNumber(u->right);
+  inOrderNumber(u->right);
 }
 
 template<class Node, class T>
