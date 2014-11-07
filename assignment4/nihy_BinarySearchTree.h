@@ -37,6 +37,7 @@ protected:
   int n;
   T null;
   bool keepChecking;
+  int order_number;
   virtual Node *findLast(T x);
   virtual bool addChild(Node *p, Node *u);
   virtual void splice(Node *u);
@@ -305,16 +306,18 @@ void BinarySearchTree<Node, T>::rotateRight(Node *u) {
 
 template<class Node, class T>
 void BinarySearchTree<Node, T>::preOrderNumber() {
+  order_number = 0;
   preOrderNumber(r);
 }
 
 template<class Node, class T>
 void BinarySearchTree<Node, T>::preOrderNumber(Node* u) {
-  int order_number = 1;
   if (u == nil)
     return;
 
-  u->pre_order = ++order_number;
+  order_number++;
+
+  u->pre_order = order_number;
   preOrderNumber(u->left);
   preOrderNumber(u->right);
 }
@@ -326,29 +329,32 @@ void BinarySearchTree<Node, T>::inOrderNumber() {
 
 template<class Node, class T>
 void BinarySearchTree<Node, T>::inOrderNumber(Node* u) {
-  int order_number = 1;
   if (u == nil)
     return;
 
+  order_number++;
+
   inOrderNumber(u->left);
-  u->pre_order = ++order_number;
+  u->in_order = order_number;
   ineOrderNumber(u->right);
 }
 
 template<class Node, class T>
 void BinarySearchTree<Node, T>::postOrderNumbers() {
+  order_number = 0;
   postOrderNumbers(r);
 }
 
 template<class Node, class T>
 void BinarySearchTree<Node, T>::postOrderNumbers(Node* u) {
-  int order_number = 1;
   if (u == nil)
     return;
 
+  order_number++;
+
   postOrderNumbers(u->left);
   postOrderNumbers(u->right);
-  u->pst_order = ++order_number;
+  u->pst_order = order_number;
 }
 
 

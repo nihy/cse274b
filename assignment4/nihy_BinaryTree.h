@@ -47,6 +47,9 @@ public:
   virtual void traverse2();
   virtual void bfTraverse();
   virtual int Height2(Node* u);
+  virtual Node *getRootNode() {
+    return r;
+  }
   bool isBalanced();
   int isBalanced(Node *u);
 };
@@ -247,9 +250,9 @@ void BinaryTree<Node>::bfTraverse() {
 
 template<class Node>
 bool BinaryTree<Node>::isBalanced() {
-  if (isBalanced(r) < 2)
-    return true;
-  return false;
+  if (isBalanced(r) < 0)
+    return false;
+  return true;
 }
 
 template<class Node>
