@@ -27,7 +27,7 @@ int main() {
    tree.add(9);
    tree.add(5);
 
-   cout << tree.height() << endl;
+   // cout << tree.height() << endl;
    cout << tree.isBalanced() << endl;
 
 

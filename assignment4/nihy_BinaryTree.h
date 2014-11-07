@@ -48,7 +48,7 @@ public:
   virtual void bfTraverse();
   virtual int Height2(Node* u);
   bool isBalanced();
-  bool isBalanced(Node *u);
+  int isBalanced(Node *u);
 };
 
 class BTNode1: public BTNode<BTNode1> {
@@ -247,16 +247,25 @@ void BinaryTree<Node>::bfTraverse() {
 
 template<class Node>
 bool BinaryTree<Node>::isBalanced() {
-  isBalanced(r);
+  if (isBalanced(r) < 2)
+    return true;
+  return false;
 }
 
 template<class Node>
-bool BinaryTree<Node>::isBalanced(Node *u) {
+int BinaryTree<Node>::isBalanced(Node *u) {
+  if (u == nil)
+    return 0;
+  int sizeLeft = isBalanced(u->left);
+  int sizeRght = isBalanced(u->right);
+
+  if (sizeLeft == -1 || sizeRght == -1)
+    return 1+sizeLeft+sizeRght;
+
   if (u->left == nil || u->right == nil)
-    return true;
-  int l_r_diff = abs(size(u->left) - size(u->right));
-  return (l_r_diff <= 1 && l_r_diff >= 0);
+    return -1;
 }
+
 
 } /* namespace ods */
 
