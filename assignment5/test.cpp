@@ -38,7 +38,7 @@ void testCHash(DataStructureTester<ChainedHashTable<int> > &chashtest) {
   cout << "Seq. REMOVE:   " << seq_rem/20 << " milliseconds" << endl;
   cout << "Random ADD:    " << rnd_add/20 << " milliseconds" << endl;
   cout << "Random FIND:   " << rnd_fnd/20 << " milliseconds" << endl;
-  cout << "Random REMOVE: " << rnd_rem/20 << " milliseconds" << endl;
+  cout << "Random REMOVE: " << rnd_rem/20 << " milliseconds\n" << endl;
 
 }
 
@@ -63,7 +63,7 @@ void testLHash(DataStructureTester<LinearHashTable<int> > &lhashtest) {
   cout << "Seq. REMOVE:   " << seq_rem/20 << " milliseconds" << endl;
   cout << "Random ADD:    " << rnd_add/20 << " milliseconds" << endl;
   cout << "Random FIND:   " << rnd_fnd/20 << " milliseconds" << endl;
-  cout << "Random REMOVE: " << rnd_rem/20 << " milliseconds" << endl;
+  cout << "Random REMOVE: " << rnd_rem/20 << " milliseconds\n" << endl;
 
 }
 
@@ -88,7 +88,7 @@ void testBSTree(DataStructureTester<BinarySearchTree<BSTNode1<int>, int> > &bste
   cout << "Seq. REMOVE:   " << seq_rem/20 << " milliseconds" << endl;
   cout << "Random ADD:    " << rnd_add/20 << " milliseconds" << endl;
   cout << "Random FIND:   " << rnd_fnd/20 << " milliseconds" << endl;
-  cout << "Random REMOVE: " << rnd_rem/20 << " milliseconds" << endl;
+  cout << "Random REMOVE: " << rnd_rem/20 << " milliseconds\n" << endl;
 
 }
 
@@ -111,7 +111,7 @@ void testRBTree(DataStructureTester<RedBlackTree<RedBlackNode1<int>, int> > &rbt
   cout << "Seq. REMOVE:   " << seq_rem/20 << " milliseconds" << endl;
   cout << "Random ADD:    " << rnd_add/20 << " milliseconds" << endl;
   cout << "Random FIND:   " << rnd_fnd/20 << " milliseconds" << endl;
-  cout << "Random REMOVE: " << rnd_rem/20 << " milliseconds" << endl;
+  cout << "Random REMOVE: " << rnd_rem/20 << " milliseconds\n" << endl;
 
 }
 
@@ -122,10 +122,10 @@ int main() {
   DataStructureTester<BinarySearchTree<BSTNode1<int>, int> > bstest;
   DataStructureTester<RedBlackTree<RedBlackNode1<int>, int> > rbtest;
 
-  //testCHash(chashtest);
+  testCHash(chashtest);
   testLHash(lhashtest);
-  //testBSTree(bstest);
-  //testRBTree(rbtest);
+  testBSTree(bstest);
+  testRBTree(rbtest);
 
   return 0;
 }
