@@ -9,7 +9,7 @@
 #define BINARYHEAP_H_
 
 #include <cstring>
-#include <algorithm>
+#include "math.h"
 #include "utils.h"
 #include "array.h"
 
@@ -43,6 +43,7 @@ template<class T>
  		T findMin() {
  			return a[0];
  		}
+ 		bool isHeap();
  		T remove();
  		T remove(int i);
  		void clear();
@@ -69,6 +70,20 @@ template<class T>
  		}
  		b = h.a;
  		b.reverse();
+ 	}
+
+template<class T>
+ 	bool BinaryHeap<T>::isHeap() {
+ 		bool isHeap = true;
+ 		int left = n - 2, right = n - 1, par_index = parent(left), count = 0;
+
+ 		while (par_index > 0 && count < log(n)) {
+ 			isHeap = a[left] > a[par_index] && a[right] > a[par_index];
+ 			left = parent(left);
+ 			right = left++;
+ 			count++;
+ 		}
+ 		return isHeap;
  	}
 
 
@@ -110,62 +125,62 @@ template<class T>
  		trickleDown(i);
  		if (3*n < a.length) resize();
  		return x;
-}
+ 	}
 
 
 template<class T>
-void BinaryHeap<T>::trickleDown(int i) {
-	do {
-		int j = -1;
-		int r = right(i);
-		if (r < n && compare(a[r], a[i]) < 0) {
-			int l = left(i);
-			if (compare(a[l], a[r]) < 0) {
-				j = l;
-			} else {
-				j = r;
-			}
-		} else {
-			int l = left(i);
-			if (l < n && compare(a[l], a[i]) < 0) {
-				j = l;
-			}
-		}
-		if (j >= 0)	a.swap(i, j);
-		i = j;
-	} while (i >= 0);
-}
-
-
-
-template<class T>
-BinaryHeap<T>::BinaryHeap() : a(1) {
-	n = 0;
-}
+ 	void BinaryHeap<T>::trickleDown(int i) {
+ 		do {
+ 			int j = -1;
+ 			int r = right(i);
+ 			if (r < n && compare(a[r], a[i]) < 0) {
+ 				int l = left(i);
+ 				if (compare(a[l], a[r]) < 0) {
+ 					j = l;
+ 				} else {
+ 					j = r;
+ 				}
+ 			} else {
+ 				int l = left(i);
+ 				if (l < n && compare(a[l], a[i]) < 0) {
+ 					j = l;
+ 				}
+ 			}
+ 			if (j >= 0)	a.swap(i, j);
+ 			i = j;
+ 		} while (i >= 0);
+ 	}
 
 
 
 template<class T>
-BinaryHeap<T>::BinaryHeap(array<T> &b) : a(0) {
-	a = b;
-	n = a.length;
-	for (int i = n/2-1; i >= 0; i--) {
-		trickleDown(i);
-	}
-}
+ 	BinaryHeap<T>::BinaryHeap() : a(1) {
+ 		n = 0;
+ 	}
 
 
 
 template<class T>
-BinaryHeap<T>::~BinaryHeap() {
+ 	BinaryHeap<T>::BinaryHeap(array<T> &b) : a(0) {
+ 		a = b;
+ 		n = a.length;
+ 		for (int i = n/2-1; i >= 0; i--) {
+ 			trickleDown(i);
+ 		}
+ 	}
+
+
+
+template<class T>
+ 	BinaryHeap<T>::~BinaryHeap() {
 	// nothing to do
-}
+ 	}
 
 
 
 template<class T>
-void BinaryHeap<T>::clear() {
-}
+ 	void BinaryHeap<T>::clear() {
+ 	}
 
 } /* namespace ods */
 #endif /* BINARYHEAP_H_ */
